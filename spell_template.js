@@ -10,6 +10,10 @@ path_for_template = function (type, size, orientation) {
   map[['!circle', 15, undefined]] = "[[\"M\",420,280],[\"L\",420,140],[\"L\",350,140],[\"L\",350,70],[\"L\",280,70],[\"L\",280,0],[\"L\",140,0],[\"L\",140,70],[\"L\",70,70],[\"L\",70,140],[\"L\",0,140],[\"L\",0,280],[\"L\",70,280],[\"L\",70,350],[\"L\",140,350],[\"L\",140,420],[\"L\",280,420],[\"L\",280,350],[\"L\",350,350],[\"L\",350,280],[\"L\",420,280]]";
   map[['!circle', 20, undefined]] = "[[\"M\",560,210],[\"L\",560,350],[\"L\",490,350],[\"L\",490,420],[\"L\",420,420],[\"L\",420,490],[\"L\",350,490],[\"L\",350,560],[\"L\",210,560],[\"L\",210,490],[\"L\",140,490],[\"L\",140,420],[\"L\",70,420],[\"L\",70,350],[\"L\",0,350],[\"L\",0,210],[\"L\",70,210],[\"L\",70,140],[\"L\",140,140],[\"L\",140,70],[\"L\",210,70],[\"L\",210,0],[\"L\",350,0],[\"L\",350,70],[\"L\",420,70],[\"L\",420,140],[\"L\",490,140],[\"L\",490,210],[\"L\",560,210]]";
   map[['!circle', 30, undefined]] = "[[\"M\",840,350],[\"L\",840,490],[\"L\",770,490],[\"L\",770,630],[\"L\",700,630],[\"L\",700,700],[\"L\",630,700],[\"L\",630,770],[\"L\",490,770],[\"L\",490,840],[\"L\",350,840],[\"L\",350,770],[\"L\",210,770],[\"L\",210,700],[\"L\",140,700],[\"L\",140,630],[\"L\",70,630],[\"L\",70,490],[\"L\",0,490],[\"L\",0,350],[\"L\",70,350],[\"L\",70,210],[\"L\",140,210],[\"L\",140,140],[\"L\",210,140],[\"L\",210,70],[\"L\",350,70],[\"L\",350,0],[\"L\",490,0],[\"L\",490,70],[\"L\",630,70],[\"L\",630,140],[\"L\",700,140],[\"L\",700,210],[\"L\",770,210],[\"L\",770,350],[\"L\",840,350]]";
+  map[['!line', 30, '0']] = "[[\"M\",0,0],[\"L\",70,0],[\"L\",70,420],[\"L\",0,420],[\"L\",0,0]]";
+  map[['!line', 30, '15']] = "[[\"M\",70,0],[\"L\",140,0],[\"L\",140,210],[\"L\",70,210],[\"L\",70,420],[\"L\",0,420],[\"L\",0,210],[\"L\",70,210],[\"L\",70,0]]";
+  map[['!line', 30, '30']] = "[[\"M\",140,0],[\"L\",210,0],[\"L\",210,140],[\"L\",140,140],[\"L\",140,280],[\"L\",70,280],[\"L\",70,350],[\"L\",0,350],[\"L\",0,210],[\"L\",70,210],[\"L\",70,70],[\"L\",140,70],[\"L\",140,0]]";
+  map[['!line', 30, '45']] = "[[\"M\",210,0],[\"L\",280,0],[\"L\",280,70],[\"L\",210,70],[\"L\",210,140],[\"L\",140,140],[\"L\",140,210],[\"L\",70,210],[\"L\",70,280],[\"L\",0,280],[\"L\",0,210],[\"L\",70,210],[\"L\",70,140],[\"L\",140,140],[\"L\",140,70],[\"L\",210,70],[\"L\",210,0]]";
 
   return map[[type, size, orientation]];
 }
@@ -24,6 +28,21 @@ top_for_template = function (type, size, orientation, tok) {
     }
     else if (orientation === 'straight') {
       return tok.get("top") - (tok.get("height") / 2) - (35 * (size / 5));
+    }
+    else { return 0; }
+  }
+  else if (type === '!line') {
+    if (orientation === '0') {
+      return tok.get("top") - (tok.get("height") / 2) - (35 * (size / 5));
+    }
+    else if (orientation === '15') {
+      return tok.get("top") - (tok.get("height") / 2) - (35 * (size / 5));
+    }
+    else if (orientation === '30') {
+      return tok.get("top") - (35 * (size / 5));
+    }
+    else if (orientation === '45') {
+      return tok.get("top") + (tok.get("height") / 2) - (35 * (size / 5));
     }
     else { return 0; }
   }
@@ -45,6 +64,21 @@ left_for_template = function (type, size, orientation, tok) {
       else {
         return tok.get("left") - ((tok.get("width") / 2) - 35) + 35;
       }
+    }
+    else { return 0; }
+  }
+  else if (type === '!line') {
+    if (orientation === '0') {
+      return tok.get("left");
+    }
+    else if (orientation === '15') {
+      return tok.get("left") + (tok.get("width") / 2);
+    }
+    else if (orientation === '30') {
+      return tok.get("left") + tok.get("width");
+    }
+    else if (orientation === '45') {
+      return tok.get("left") + 3 * (tok.get("width") / 2);
     }
     else { return 0; }
   }
@@ -73,6 +107,21 @@ width_for_template = function (type, size, orientation) {
     }
     else { return 0; }
   }
+  else if (type === '!line') {
+    if (orientation === '0') {
+      return 70;
+    }
+    else if (orientation === '15') {
+      return 140;
+    }
+    else if (orientation === '30') {
+      return 210;
+    }
+    else if (orientation === '45') {
+      return 280;
+    }
+    else { return 0; }
+  }
   else { return 0; }
 }
 
@@ -82,6 +131,21 @@ height_for_template = function (type, size, orientation) {
   }
   else if (type === '!cone') {
     return size * 14;
+  }
+  else if (type === '!line') {
+    if (orientation === '0') {
+      return size * 14;
+    }
+    else if (orientation === '15') {
+      return size * 14;
+    }
+    else if (orientation === '30') {
+      return size * 14 - 70;
+    }
+    else if (orientation === '45') {
+      return size * 14 - 140;
+    }
+    else { return 0; }
   }
   else { return 0; }
 }
