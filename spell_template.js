@@ -165,7 +165,6 @@ on("chat:message", function(msg) {
       if (tok !== undefined) {
         controlled_by = tok.get("controlledby");
         if (controlled_by == '') {
-          represents = tok.get("represents");
           controlled_by = getObj("character", tok.get("represents")).get("controlledby");
         }
         player = getObj("player", controlled_by);
