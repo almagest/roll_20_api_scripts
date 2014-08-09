@@ -163,12 +163,16 @@ on("chat:message", function(msg) {
     _.each(selected, function(obj) {
       var tok = getObj("graphic", obj._id);
       if (tok !== undefined) {
-        player = getObj("player", tok.get("controlledby"));
+        controlled_by = tok.get("controlledby");
+        if (controlled_by == '') {
+          controlled_by = getObj("character", tok.get("represents")).get("controlledby");
+        }
+        player = getObj("player", controlled_by);
         if (player !== undefined) {
           createObj("path", {
             layer: "objects",
             _path: path_for_template(type, size, orientation),
-            controlledby: tok.get("controlledby"),
+            controlledby: controlled_by,
             top: top_for_template(type, size, orientation, tok),
             left: left_for_template(type, size, orientation, tok),
             width: width_for_template(type, size, orientation),
